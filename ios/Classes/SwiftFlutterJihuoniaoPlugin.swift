@@ -10,10 +10,16 @@ public class SwiftFlutterJihuoniaoPlugin: NSObject, FlutterPlugin {
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        let args = call.arguments as? [String: Any] ?? [:]
+        let args: [String: Any] = call.arguments as? [String: Any] ?? [:]
         switch call.method {
         case "initSDK":
-            JiHuoNiaoSDKManager.start(withAppid: "836791510808", appKey: "36f6746399497b45")
+            JiHuoNiaoSDKManager.start(
+                withAppid: args["appId"] as! String,
+                appKey: args["appKey"] as! String)
+            result(true)
+        case "showSplashAd":
+            result(true)
+        case "showInterstitialAd":
             result(true)
         default:
             result(FlutterMethodNotImplemented)

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_jihuoniao/flutter_jihuoniao.dart';
+import 'package:flutter_jihuoniao_example/config/ad_config.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +17,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    FlutterJihuoniao.initSDK();
+    FlutterJihuoniao.initSDK(
+      appId: AdConfig.appId,
+      appKey: AdConfig.appKey,
+    );
     super.initState();
   }
 
@@ -27,10 +29,26 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Flutter JiHuoNiao Example'),
         ),
-        body: const Center(
-          child: Text('Running'),
+        body: Center(
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  FlutterJihuoniao.showSplashAd(slotId: AdConfig.splashId);
+                },
+                child: const Text('开屏广告'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  FlutterJihuoniao.showInterstitialAd(
+                      slotId: AdConfig.interstitialId);
+                },
+                child: const Text('插屏广告'),
+              )
+            ],
+          ),
         ),
       ),
     );
