@@ -1,0 +1,6 @@
+framework module AdSpaceLib {
+  umbrella header "AdSpaceLib.h"
+
+  export *
+  module * { export * }
+}

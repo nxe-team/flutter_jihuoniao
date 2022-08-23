@@ -1,0 +1,6 @@
+framework module KSCommonSDK {
+  umbrella header "KSCommonSDK.h"
+
+  export *
+  module * { export * }
+}

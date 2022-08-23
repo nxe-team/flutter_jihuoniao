@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 class FlutterJihuoniao {
   static const MethodChannel _channel = MethodChannel('flutter_jihuoniao');
 
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  /// 初始化 SDK
+  static Future<void> initSDK() async {
+    await _channel.invokeMethod('initSDK');
   }
 }
