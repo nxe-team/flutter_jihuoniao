@@ -3,8 +3,14 @@ import UIKit
 import JiHuoNiaoAdSDK
 
 public class SwiftFlutterJihuoniaoPlugin: NSObject, FlutterPlugin {
+    private static var messenger: FlutterBinaryMessenger?
+    private var interstitialAd: FlutterJihuoniaoInterstitialAd?
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "flutter_jihuoniao", binaryMessenger: registrar.messenger())
+        messenger = registrar.messenger()
+        let channel = FlutterMethodChannel(
+            name: FlutterJihuoniaoChannel.pluginChannelName,
+            binaryMessenger: messenger!)
         let instance = SwiftFlutterJihuoniaoPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
@@ -20,6 +26,9 @@ public class SwiftFlutterJihuoniaoPlugin: NSObject, FlutterPlugin {
         case "showSplashAd":
             result(true)
         case "showInterstitialAd":
+            interstitialAd = FlutterJihuoniaoInterstitialAd(
+                args: args,
+                messenger: SwiftFlutterJihuoniaoPlugin.messenger!)
             result(true)
         default:
             result(FlutterMethodNotImplemented)
