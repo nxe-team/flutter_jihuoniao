@@ -29,13 +29,11 @@ public class SwiftFlutterJihuoniaoPlugin: NSObject, FlutterPlugin {
                 args: args,
                 result: result,
                 messenger: SwiftFlutterJihuoniaoPlugin.messenger!)
-            result(true)
         case "showInterstitialAd":
             interstitialAd = FlutterJihuoniaoInterstitialAd(
                 args: args,
                 result: result,
                 messenger: SwiftFlutterJihuoniaoPlugin.messenger!)
-            result(true)
         default:
             result(FlutterMethodNotImplemented)
         }
