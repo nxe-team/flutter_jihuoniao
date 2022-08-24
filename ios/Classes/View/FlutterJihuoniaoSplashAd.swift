@@ -9,10 +9,12 @@ import JiHuoNiaoAdSDK
 import UIKit
 
 class FlutterJihuoniaoSplashAd: NSObject, JHNSplashAdDelegate {
+    private let result: FlutterResult
     private let methodChannel: FlutterMethodChannel
     private let splashAd: JHNSplashAd
     
-    init(args: [String: Any], messenger: FlutterBinaryMessenger) {
+    init(args: [String: Any], result: @escaping FlutterResult, messenger: FlutterBinaryMessenger) {
+        self.result = result
         methodChannel = FlutterMethodChannel(
             name: FlutterJihuoniaoChannel.splashAdChannelName,
             binaryMessenger: messenger)
@@ -53,24 +55,22 @@ class FlutterJihuoniaoSplashAd: NSObject, JHNSplashAdDelegate {
     /// 开屏广告渲染成功
     func jhnSplashViewRenderSuccess() {
         postMessage("onAdRenderSuccess")
-        print("jhnSplashViewRenderSuccess")
     }
     
     /// 开屏广告加载失败
     func jhnSplashViewFailWithError(_ error: Error) {
-        postMessage("onAdDidClose")
-        print("jhnSplashViewFailWithError")
+        postMessage("onAdLoadFail")
+        result(false)
     }
     
     /// 开屏广告被点击
     func jhnSplashViewDidClick() {
         postMessage("onAdDidClick")
-        print("jhnSplashViewDidClick")
     }
     
     /// 开屏广告已关闭
     func jhnSplashViewDidClose() {
         postMessage("onAdDidClose")
-        print("jhnSplashViewDidClose")
+        result(true)
     }
 }

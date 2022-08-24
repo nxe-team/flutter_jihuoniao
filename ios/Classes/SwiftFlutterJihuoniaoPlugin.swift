@@ -27,11 +27,13 @@ public class SwiftFlutterJihuoniaoPlugin: NSObject, FlutterPlugin {
         case "showSplashAd":
             splashAd = FlutterJihuoniaoSplashAd(
                 args: args,
+                result: result,
                 messenger: SwiftFlutterJihuoniaoPlugin.messenger!)
             result(true)
         case "showInterstitialAd":
             interstitialAd = FlutterJihuoniaoInterstitialAd(
                 args: args,
+                result: result,
                 messenger: SwiftFlutterJihuoniaoPlugin.messenger!)
             result(true)
         default:

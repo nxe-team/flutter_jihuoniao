@@ -8,10 +8,12 @@
 import JiHuoNiaoAdSDK
 
 class FlutterJihuoniaoInterstitialAd: NSObject, JHNInterstitialAdDelegate {
+    private let result: FlutterResult
     private let methodChannel: FlutterMethodChannel
     private let interstitialAd: JHNInterstitialAd
     
-    init(args: [String: Any], messenger: FlutterBinaryMessenger) {
+    init(args: [String: Any], result: @escaping FlutterResult, messenger: FlutterBinaryMessenger) {
+        self.result = result
         methodChannel = FlutterMethodChannel(
                     name: FlutterJihuoniaoChannel.interstitialAdChannelName,
                     binaryMessenger: messenger)
@@ -28,24 +30,22 @@ class FlutterJihuoniaoInterstitialAd: NSObject, JHNInterstitialAdDelegate {
     /// 插屏广告渲染成功
     func jhnInterstitialAdRenderSuccess() {
         postMessage("onAdRenderSuccess")
-        print("jhnInterstitialAdRenderSuccess")
     }
     
     /// 插屏广告加载失败
     func jhnInterstitialAdFailWithError(_ error: Error?) {
-        postMessage("onAdDidClose")
-        print("jhnInterstitialAdFailWithError \(error)")
+        postMessage("onAdLoadFail")
+        result(false)
     }
     
     /// 插屏广告被点击
     func jhnInterstitialAdDidClick() {
         postMessage("onAdDidClick")
-        print("jhnInterstitialAdDidClick")
     }
     
     /// 插屏广告已关闭
     func jhnInterstitialAdDidClose() {
         postMessage("onAdDidClose")
-        print("jhnInterstitialAdDidClose")
+        result(true)
     }
 }
