@@ -42,6 +42,15 @@ class _MyAppState extends State<MyApp> {
               ),
               ElevatedButton(
                 onPressed: () {
+                  FlutterJihuoniao.showSplashAd(
+                    slotId: AdConfig.splashId,
+                    logo: 'SplashBottomLogo',
+                  );
+                },
+                child: const Text('开屏广告（带Logo）'),
+              ),
+              ElevatedButton(
+                onPressed: () {
                   FlutterJihuoniao.showInterstitialAd(
                       slotId: AdConfig.interstitialId);
                 },

@@ -15,9 +15,11 @@ class FlutterJihuoniao {
   }
 
   /// 显示开屏广告
-  static Future<void> showSplashAd({required String slotId}) async {
+  static Future<void> showSplashAd(
+      {required String slotId, String? logo}) async {
     await _channel.invokeMethod('showSplashAd', {
       'slotId': slotId,
+      'logo': logo,
     });
   }
 
