@@ -21,7 +21,8 @@ class FlutterJihuoniaoInterstitialAd: NSObject, JHNInterstitialAdDelegate {
         interstitialAd.load()
     }
     
-    private func postMessage(_ method: String, arguments: [String: Any]? = nil) {        methodChannel.invokeMethod(method, arguments: arguments)
+    private func postMessage(_ method: String, arguments: [String: Any]? = nil) {
+        methodChannel.invokeMethod(method, arguments: arguments)
     }
     
     /// 插屏广告渲染成功

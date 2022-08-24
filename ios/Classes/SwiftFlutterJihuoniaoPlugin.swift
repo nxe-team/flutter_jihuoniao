@@ -4,6 +4,7 @@ import JiHuoNiaoAdSDK
 
 public class SwiftFlutterJihuoniaoPlugin: NSObject, FlutterPlugin {
     private static var messenger: FlutterBinaryMessenger?
+    private var splashAd: FlutterJihuoniaoSplashAd?
     private var interstitialAd: FlutterJihuoniaoInterstitialAd?
     
     public static func register(with registrar: FlutterPluginRegistrar) {
@@ -24,6 +25,9 @@ public class SwiftFlutterJihuoniaoPlugin: NSObject, FlutterPlugin {
                 appKey: args["appKey"] as! String)
             result(true)
         case "showSplashAd":
+            splashAd = FlutterJihuoniaoSplashAd(
+                args: args,
+                messenger: SwiftFlutterJihuoniaoPlugin.messenger!)
             result(true)
         case "showInterstitialAd":
             interstitialAd = FlutterJihuoniaoInterstitialAd(
