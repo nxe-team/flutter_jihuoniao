@@ -23,27 +23,35 @@ class FlutterJihuoniaoSplashAd: NSObject, JHNSplashAdDelegate {
         splashAd.delegate = self
         // 设置底部 logo
         let logo: String = args["logo"] as? String ?? ""
-        if !logo.isEmpty {
-            splashAd.setLogoBottom(generateLogoView(logo))
+        if !logo.isEmpty, let logoView: UIView = generateLogoView(logo) {
+            splashAd.setLogoBottom(logoView)
         }
         splashAd.load()
     }
     
     /// 制作 logo 视图
-    func generateLogoView(_ name: String) -> UIView {
-        // logo 图
-        let logoImage: UIView = UIImageView(image: UIImage(named: name))
+    func generateLogoView(_ name: String) -> UIView? {
+        let logoImage: UIImage? = UIImage(named: name)
+        // 图片不存在
+        if logoImage == nil {
+            return nil
+        }
+        let logoImageView: UIView = UIImageView(image: logoImage)
         // 容器
         let screenSize: CGSize = UIScreen.main.bounds.size
-        let logoContainerWidth: CGFloat = screenSize.width
-        let logoContainerHeight: CGFloat = screenSize.height * 0.15
-        let logoContainer: UIView = UIView(frame: CGRect(x: 0, y: 0, width: logoContainerWidth, height: logoContainerHeight))
+        let logoContainerFrame: CGRect = CGRect(
+            x: 0,
+            y: 0,
+            width: screenSize.width,
+            // 推荐开屏 Logo 高度占比
+            height: screenSize.height * 0.15)
+        let logoContainer: UIView = UIView(frame: logoContainerFrame)
         logoContainer.backgroundColor = UIColor.white
         // 居中
-        logoImage.contentMode = UIView.ContentMode.center
-        logoImage.center = logoContainer.center
+        logoImageView.contentMode = UIView.ContentMode.center
+        logoImageView.center = logoContainer.center
         // 添加 logo
-        logoContainer.addSubview(logoImage)
+        logoContainer.addSubview(logoImageView)
         return logoContainer
     }
     
