@@ -1,0 +1,15 @@
+.DS_Store
+.dart_tool/
+
+.packages
+.pub/
+
+build/
+
+.idea/
+.vscode/
+
+# ad libs
+example/ios/AdSDKLibs/CSJCommonSDK/
+example/ios/AdSDKLibs/GDTCommonSDK/
+example/ios/AdSDKLibs/KSCommonSDK/
