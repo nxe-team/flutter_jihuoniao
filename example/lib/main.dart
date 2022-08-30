@@ -52,7 +52,9 @@ class _MyAppState extends State<MyApp> {
               ElevatedButton(
                 onPressed: () {
                   FlutterJihuoniao.showInterstitialAd(
-                      slotId: AdConfig.interstitialId);
+                    context: context,
+                    slotId: AdConfig.interstitialId,
+                  );
                 },
                 child: const Text('插屏广告'),
               )
