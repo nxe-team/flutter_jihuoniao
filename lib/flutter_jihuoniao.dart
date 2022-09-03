@@ -88,8 +88,10 @@ class FlutterJihuoniao {
       context: context,
       barrierDismissible: false,
       barrierColor: Colors.transparent,
-      builder: (BuildContext context) =>
-          const Material(color: Colors.transparent),
+      builder: (BuildContext context) => WillPopScope(
+        onWillPop: () async => false,
+        child: const Material(color: Colors.transparent),
+      ),
     );
 
     await _channel.invokeMethod('showInterstitialAd', {
