@@ -14,9 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called when interstitial ad material failed to load.
- @param error : the reason of error
  */
-- (void)nativeExpresInterstitialAdFailWithError:(NSError * __nullable)error;
+- (void)nativeExpresInterstitialAdFailWithCode:(NSInteger)code TipStr:(NSString *)tipStr ErrorMessage:(NSString *)errorMessage;
+
 
 /**
  This method is called when rendering a nativeExpressAdView successed.

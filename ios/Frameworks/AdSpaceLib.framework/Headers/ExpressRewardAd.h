@@ -18,9 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This method is called when video ad materia failed to load.
- @param error : the reason of error
  */
-- (void)nativeExpressRewardedVideoAdFailWithError:(NSError *_Nullable)error;
+- (void)nativeExpressRewardedVideoAdFailWithCode:(NSInteger)code TipStr:(NSString *)tipStr ErrorMessage:(NSString *)errorMessage;
 
 /**
  This method is called when rendering a nativeExpressAdView successed.
