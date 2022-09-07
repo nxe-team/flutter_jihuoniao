@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Headers/JHNFeedAd.h</key>
+		<data>
+		ZEQj2icfgaLa5K7MOQEan0jLM4k=
+		</data>
 		<key>Headers/JHNInterstitialAd.h</key>
 		<data>
 		cqOD86GvsamHigll/IG8GOvnVnA=
@@ -18,7 +22,7 @@
 		</data>
 		<key>Headers/JiHuoNiaoAdSDK.h</key>
 		<data>
-		sqACRWx1bAlSmlPcaJBl2fVjD7E=
+		C4T3oh+ObBngdHGhoFhTfe0WdHw=
 		</data>
 		<key>Headers/JiHuoNiaoSDKManager.h</key>
 		<data>
@@ -35,6 +39,17 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Headers/JHNFeedAd.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ZEQj2icfgaLa5K7MOQEan0jLM4k=
+			</data>
+			<key>hash2</key>
+			<data>
+			dpb8mQKq4b5/gWb3bxHHVxGXWBSq4p5E4clfWoAlJO4=
+			</data>
+		</dict>
 		<key>Headers/JHNInterstitialAd.h</key>
 		<dict>
 			<key>hash</key>
@@ -72,11 +87,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			sqACRWx1bAlSmlPcaJBl2fVjD7E=
+			C4T3oh+ObBngdHGhoFhTfe0WdHw=
 			</data>
 			<key>hash2</key>
 			<data>
-			FLumOsaHEdW0Ghg2GnkVgzxT9iES5zNCeLPSxpcjw8U=
+			l3XjQskSkFBgo9FMQOIm2Hv6FV0fSjwoC8ac4I/0+wI=
 			</data>
 		</dict>
 		<key>Headers/JiHuoNiaoSDKManager.h</key>
