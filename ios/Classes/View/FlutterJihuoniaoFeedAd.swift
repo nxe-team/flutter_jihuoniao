@@ -26,15 +26,19 @@ class FlutterJihuoniaoFeedAdFactory: NSObject, FlutterPlatformViewFactory {
 }
 
 class FlutterJihuoniaoFeedAd: NSObject, FlutterPlatformView, JHNFeedAdDelegate {
+    private let methodChannel: FlutterMethodChannel
     private let feedAd: JHNFeedAd
-    private let adView: UIView
+    private let container: UIView
     
     func view() -> UIView {
-        adView
+        container
     }
     
     init(frame: CGRect, id: Int64, args: [String: Any], messenger: FlutterBinaryMessenger) {
-        adView = UIView(frame: frame)
+        methodChannel = FlutterMethodChannel(
+            name: "\(FlutterJihuoniaoChannel.feedAdChannelPrefix)/\(id)",
+            binaryMessenger: messenger)
+        container = UIView(frame: frame)
         feedAd = JHNFeedAd(
             slotID: args["slotId"] as! String,
             size: CGSize(width: UIScreen.main.bounds.width, height: 0))
@@ -44,34 +48,44 @@ class FlutterJihuoniaoFeedAd: NSObject, FlutterPlatformView, JHNFeedAdDelegate {
         feedAd.load(withCount: 1)
     }
     
+    /// 传递消息给 Flutter 端
+    private func postMessage(_ method: String, arguments: [String: Any]? = nil) {
+        methodChannel.invokeMethod(method, arguments: arguments)
+    }
+    
     /// 信息流广告加载成功
     func jhnFeedAdDidLoad(_ feedDataArray: [Any]) {
-        print("jhnFeedAdDidLoad");
-        adView.addSubview(feedDataArray.first as! UIView)
+        container.addSubview(feedDataArray.first as! UIView)
     }
     
     /// 信息流广告加载失败
     func jhnFeedAdFail(withCode code: Int, tipStr: String, errorMessage: String) {
-        print("jhnFeedAdFail");
+        postMessage("onAdLoadFail", arguments: [
+            "message": "\(code); \(tipStr); \(errorMessage)",
+        ])
     }
     
     /// 信息流广告渲染成功
     func jhnFeedAdViewRenderSuccess() {
-        print("jhnFeedAdViewRenderSuccess");
+        if let adView: UIView = container.subviews.first {
+            postMessage("onAdRenderSuccess", arguments: [
+                "height": adView.bounds.height
+            ])
+        }
     }
     
     /// 信息流广告已展示
     func jhnFeedAdViewExposure() {
-        print("jhnFeedAdViewExposure");
+        postMessage("onAdViewExposure")
     }
     
     /// 信息流广告被点击
     func jhnFeedAdDidClick() {
-        print("jhnFeedAdDidClick");
+        postMessage("onAdDidClick")
     }
     
     /// 信息流广告已关闭
     func jhnFeedAdDidClose(_ feedAd: Any) {
-        print("jhnFeedAdDidClose");
+        postMessage("onAdDidClose")
     }
 }
