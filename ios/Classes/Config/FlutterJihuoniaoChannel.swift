@@ -14,4 +14,7 @@ class FlutterJihuoniaoChannel: NSObject {
     
     /// 插屏广告消息通道
     static let interstitialAdChannelName = "flutter_jihuoniao_interstitial_ad"
+    
+    /// 信息流广告 PlatformView
+    static let feedAdChannelPrefix = "flutter_jihuoniao_feed_ad"
 }

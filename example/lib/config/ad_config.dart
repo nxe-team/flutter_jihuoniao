@@ -18,4 +18,9 @@ class AdConfig {
   static String get interstitialId {
     return '81q7svkjcxxa';
   }
+
+  /// 信息流广告
+  static String get feedId {
+    return '85ikvtui5f5i';
+  }
 }
