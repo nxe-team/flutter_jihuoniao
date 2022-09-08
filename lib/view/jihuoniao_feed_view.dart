@@ -11,19 +11,19 @@ class JihuoniaoFeedAd extends StatefulWidget {
   final String slotId;
 
   /// 广告渲染成功
-  final Function? onAdRenderSuccess;
+  final void Function()? onAdRenderSuccess;
 
   /// 广告加载失败
   final void Function(String message)? onAdLoadFail;
 
   /// 广告被曝光
-  final Function? onAdViewExposure;
+  final void Function()? onAdViewExposure;
 
   /// 广告被点击
-  final Function? onAdDidClick;
+  final void Function()? onAdDidClick;
 
   /// 广告已广告
-  final Function? onAdDidClose;
+  final void Function()? onAdDidClose;
 
   const JihuoniaoFeedAd({
     Key? key,
@@ -75,33 +75,37 @@ class _JihuoniaoFeedAdState extends State<JihuoniaoFeedAd> {
   Widget build(BuildContext context) {
     if (Platform.isAndroid) return const SizedBox.shrink();
 
-    return SizedBox(
-      height: _height,
-      child: VisibilityDetector(
-        key: _detectorKey,
-        child: UiKitView(
-          viewType: JihuoniaoFeedAd.viewType,
-          creationParams: {'slotId': widget.slotId},
-          creationParamsCodec: const StandardMessageCodec(),
-          onPlatformViewCreated: (int id) {
-            _methodChannel = MethodChannel('${JihuoniaoFeedAd.viewType}/$id');
-            _methodChannel!.setMethodCallHandler(methodCallHandler);
+    return AnimatedSize(
+      curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 300),
+      child: SizedBox(
+        height: _height,
+        child: VisibilityDetector(
+          key: _detectorKey,
+          child: UiKitView(
+            viewType: JihuoniaoFeedAd.viewType,
+            creationParams: {'slotId': widget.slotId},
+            creationParamsCodec: const StandardMessageCodec(),
+            onPlatformViewCreated: (int id) {
+              _methodChannel = MethodChannel('${JihuoniaoFeedAd.viewType}/$id');
+              _methodChannel!.setMethodCallHandler(methodCallHandler);
+            },
+          ),
+          onVisibilityChanged: (VisibilityInfo visibilityInfo) {
+            if (!mounted) return;
+            // 被遮盖了
+            final bool isCovered = visibilityInfo.visibleFraction != 1.0;
+            final Offset offset = (context.findRenderObject() as RenderBox)
+                .localToGlobal(Offset.zero);
+            _methodChannel?.invokeMethod('updateVisibleBounds', {
+              'isCovered': isCovered,
+              'x': offset.dx + visibilityInfo.visibleBounds.left,
+              'y': offset.dy + visibilityInfo.visibleBounds.top,
+              'width': visibilityInfo.visibleBounds.width,
+              'height': visibilityInfo.visibleBounds.height,
+            });
           },
         ),
-        onVisibilityChanged: (VisibilityInfo visibilityInfo) {
-          if (!mounted) return;
-          // 被遮盖了
-          final bool isCovered = visibilityInfo.visibleFraction != 1.0;
-          final Offset offset = (context.findRenderObject() as RenderBox)
-              .localToGlobal(Offset.zero);
-          _methodChannel?.invokeMethod('updateVisibleBounds', {
-            'isCovered': isCovered,
-            'x': offset.dx + visibilityInfo.visibleBounds.left,
-            'y': offset.dy + visibilityInfo.visibleBounds.top,
-            'width': visibilityInfo.visibleBounds.width,
-            'height': visibilityInfo.visibleBounds.height,
-          });
-        },
       ),
     );
   }
