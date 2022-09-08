@@ -38,7 +38,7 @@ class FlutterJihuoniaoFeedAd: NSObject, FlutterPlatformView, JHNFeedAdDelegate {
         methodChannel = FlutterMethodChannel(
             name: "\(FlutterJihuoniaoChannel.feedAdChannelPrefix)/\(id)",
             binaryMessenger: messenger)
-        container = UIView(frame: frame)
+        container = FlutterJihuoniaoInterceptPenetration(frame: frame, methodChannel: methodChannel)
         feedAd = JHNFeedAd(
             slotID: args["slotId"] as! String,
             size: CGSize(width: UIScreen.main.bounds.width, height: 0))

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class JihuoniaoFeedAd extends StatefulWidget {
   static const String viewType = 'flutter_jihuoniao_feed_ad';
@@ -39,6 +40,9 @@ class JihuoniaoFeedAd extends StatefulWidget {
 }
 
 class _JihuoniaoFeedAdState extends State<JihuoniaoFeedAd> {
+  final UniqueKey _detectorKey = UniqueKey();
+  MethodChannel? _methodChannel;
+
   double _height = 0;
 
   Future<void> methodCallHandler(MethodCall call) async {
@@ -73,13 +77,30 @@ class _JihuoniaoFeedAdState extends State<JihuoniaoFeedAd> {
 
     return SizedBox(
       height: _height,
-      child: UiKitView(
-        viewType: JihuoniaoFeedAd.viewType,
-        creationParams: {'slotId': widget.slotId},
-        creationParamsCodec: const StandardMessageCodec(),
-        onPlatformViewCreated: (int id) {
-          MethodChannel('${JihuoniaoFeedAd.viewType}/$id')
-              .setMethodCallHandler(methodCallHandler);
+      child: VisibilityDetector(
+        key: _detectorKey,
+        child: UiKitView(
+          viewType: JihuoniaoFeedAd.viewType,
+          creationParams: {'slotId': widget.slotId},
+          creationParamsCodec: const StandardMessageCodec(),
+          onPlatformViewCreated: (int id) {
+            _methodChannel = MethodChannel('${JihuoniaoFeedAd.viewType}/$id');
+            _methodChannel!.setMethodCallHandler(methodCallHandler);
+          },
+        ),
+        onVisibilityChanged: (VisibilityInfo visibilityInfo) {
+          if (!mounted) return;
+          // 被遮盖了
+          final bool isCovered = visibilityInfo.visibleFraction != 1.0;
+          final Offset offset = (context.findRenderObject() as RenderBox)
+              .localToGlobal(Offset.zero);
+          _methodChannel?.invokeMethod('updateVisibleBounds', {
+            'isCovered': isCovered,
+            'x': offset.dx + visibilityInfo.visibleBounds.left,
+            'y': offset.dy + visibilityInfo.visibleBounds.top,
+            'width': visibilityInfo.visibleBounds.width,
+            'height': visibilityInfo.visibleBounds.height,
+          });
         },
       ),
     );
