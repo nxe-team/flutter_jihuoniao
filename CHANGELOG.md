@@ -1,3 +1,8 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+- iOS 开屏广告
+- iOS 插屏广告
+
+## 0.0.2
+
+- iOS 信息流广告
