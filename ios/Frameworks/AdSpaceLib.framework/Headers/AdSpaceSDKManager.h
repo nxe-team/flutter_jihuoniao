@@ -2,7 +2,7 @@
 //  AdSpaceSDKManager.h
 //  AdSpaceSDKManager
 //
-//  Created by xm on 2022/07/03.
+//  Created by xm on 2022/07/03.50
 //
 
 #import <Foundation/Foundation.h>

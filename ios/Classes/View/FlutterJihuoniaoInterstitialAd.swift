@@ -33,7 +33,7 @@ class FlutterJihuoniaoInterstitialAd: NSObject, JHNInterstitialAdDelegate {
     }
     
     /// 插屏广告加载失败
-    func jhnInterstitialAdFailWithError(_ error: Error?) {
+    func jhnInterstitialAdFail(withCode code: Int, tipStr: String, errorMessage: String) {
         postMessage("onAdLoadFail")
         result(false)
     }

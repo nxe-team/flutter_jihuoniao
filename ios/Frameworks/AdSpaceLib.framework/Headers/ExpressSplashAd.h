@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This method is called when when video ad play completed or an error occurred.
  */
-- (void)nativeExpressSplashViewFailWithError:(NSError *)error;
+- (void)nativeExpressSplashViewFailWithFailWithCode:(NSInteger)code TipStr:(NSString *)tipStr ErrorMessage:(NSString *)errorMessage;
 
 @end
 

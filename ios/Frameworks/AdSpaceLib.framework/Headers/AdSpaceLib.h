@@ -19,5 +19,6 @@ FOUNDATION_EXPORT const unsigned char AdSpaceLibVersionString[];
 #import <AdSpaceLib/ExpressSplashAd.h>
 #import <AdSpaceLib/ExpressInterstitialAd.h>
 #import <AdSpaceLib/ExpressRewardAd.h>
+#import <AdSpaceLib/ExpressFeedAd.h>
 
 

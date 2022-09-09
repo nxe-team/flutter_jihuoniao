@@ -66,7 +66,7 @@ class FlutterJihuoniaoSplashAd: NSObject, JHNSplashAdDelegate {
     }
     
     /// 开屏广告加载失败
-    func jhnSplashViewFailWithError(_ error: Error) {
+    func jhnSplashViewFail(withCode code: Int, tipStr: String, errorMessage: String) {
         postMessage("onAdLoadFail")
         result(false)
     }

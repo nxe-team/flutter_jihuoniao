@@ -186,3 +186,42 @@ await FlutterJihuoniao.showInterstitialAd(
 );
 ```
 
+### 信息流广告
+
+```dart
+class FeedAd extends StatefulWidget {
+  const FeedAd({Key? key}) : super(key: key);
+
+  @override
+  State<FeedAd> createState() => _FeedAdState();
+}
+
+class _FeedAdState extends State<FeedAd> with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return JihuoniaoFeedAd(
+      slotId: AdConfig.feedId,
+      onAdRenderSuccess: () {
+        // 渲染成功
+      },
+      onAdLoadFail: (String message) {
+        print('FeedAd | 加载失败 $message');
+      },
+      onAdViewExposure: () {
+        // 曝光成功
+      },
+      onAdDidClick: () {
+        // 点击了广告
+      },
+      onAdDidClose: () {
+        // 广告被关闭
+      },
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+```
+

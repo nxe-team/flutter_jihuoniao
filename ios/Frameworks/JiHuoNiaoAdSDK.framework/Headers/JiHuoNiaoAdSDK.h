@@ -19,4 +19,5 @@ FOUNDATION_EXPORT const unsigned char JiHuoNiaoAdSDKVersionString[];
 #import <JiHuoNiaoAdSDK/JHNSplashAd.h>
 #import <JiHuoNiaoAdSDK/JHNInterstitialAd.h>
 #import <JiHuoNiaoAdSDK/JHNRewardAd.h>
+#import <JiHuoNiaoAdSDK/JHNFeedAd.h>
 #import <JiHuoNiaoAdSDK/JiHuoNiaoSDKManager.h>

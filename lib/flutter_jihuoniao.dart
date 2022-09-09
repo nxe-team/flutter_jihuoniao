@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_jihuoniao/config/ad_channel.dart';
 
@@ -50,6 +51,7 @@ class FlutterJihuoniao {
 
   /// 显示插屏广告
   static Future<void> showInterstitialAd({
+    required BuildContext context,
     required String slotId,
     Function? onAdRenderSuccess,
     Function? onAdLoadFail,
@@ -63,16 +65,35 @@ class FlutterJihuoniao {
           onAdRenderSuccess?.call();
           break;
         case 'onAdLoadFail':
+          // 关闭空白弹窗
+          Navigator.pop(context);
           onAdLoadFail?.call();
           break;
         case 'onAdDidClick':
           onAdDidClick?.call();
           break;
         case 'onAdDidClose':
+          // 关闭空白弹窗
+          Navigator.pop(context);
           onAdDidClose?.call();
           break;
       }
     });
+
+    // 显示一个空白弹窗用于阻止部分广告素材存在的事件穿透
+    // QUE: 展示的广告并不在顶层？
+    // 考虑放在iOS里添加空白视图，Delegate 回调中
+    //   没有广告的 UIVIew 供调用 bringSubviewToFront
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.transparent,
+      builder: (BuildContext context) => WillPopScope(
+        onWillPop: () async => false,
+        child: const Material(color: Colors.transparent),
+      ),
+    );
+
     await _channel.invokeMethod('showInterstitialAd', {
       'slotId': slotId,
     });

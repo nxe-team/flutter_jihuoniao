@@ -4,21 +4,25 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Headers/JHNFeedAd.h</key>
+		<data>
+		ZEQj2icfgaLa5K7MOQEan0jLM4k=
+		</data>
 		<key>Headers/JHNInterstitialAd.h</key>
 		<data>
-		jKCO67Yv12/00L+adn8hWsIEWPg=
+		cqOD86GvsamHigll/IG8GOvnVnA=
 		</data>
 		<key>Headers/JHNRewardAd.h</key>
 		<data>
-		MGHWLlSf2R8Lp0pWLIFOZJRDIXo=
+		9HuZvt74975V5krn8/j4TYHkwEs=
 		</data>
 		<key>Headers/JHNSplashAd.h</key>
 		<data>
-		d3b5t336HjuKv2rK3lHRh4ReWpU=
+		gdsbv2qzIlrLdEWbgV4B+oWIKyE=
 		</data>
 		<key>Headers/JiHuoNiaoAdSDK.h</key>
 		<data>
-		sqACRWx1bAlSmlPcaJBl2fVjD7E=
+		C4T3oh+ObBngdHGhoFhTfe0WdHw=
 		</data>
 		<key>Headers/JiHuoNiaoSDKManager.h</key>
 		<data>
@@ -35,48 +39,59 @@
 	</dict>
 	<key>files2</key>
 	<dict>
+		<key>Headers/JHNFeedAd.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ZEQj2icfgaLa5K7MOQEan0jLM4k=
+			</data>
+			<key>hash2</key>
+			<data>
+			dpb8mQKq4b5/gWb3bxHHVxGXWBSq4p5E4clfWoAlJO4=
+			</data>
+		</dict>
 		<key>Headers/JHNInterstitialAd.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			jKCO67Yv12/00L+adn8hWsIEWPg=
+			cqOD86GvsamHigll/IG8GOvnVnA=
 			</data>
 			<key>hash2</key>
 			<data>
-			OMr1lYNqnI54IOBmQWOVc5SkpV5nVHbi4Ei06Fpo/HA=
+			nV+0Z34SffTMAm81PX3mWmeB86hgbYQLJeAIhmWrrEE=
 			</data>
 		</dict>
 		<key>Headers/JHNRewardAd.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			MGHWLlSf2R8Lp0pWLIFOZJRDIXo=
+			9HuZvt74975V5krn8/j4TYHkwEs=
 			</data>
 			<key>hash2</key>
 			<data>
-			22QxHUKgphLpX9JZFTC+3GJ9K04ZtpnUP41qPQxIKHU=
+			e5eEtjp7CStoE+rU0MKM153vEEQqPhs4IkZzVI6a9Dg=
 			</data>
 		</dict>
 		<key>Headers/JHNSplashAd.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			d3b5t336HjuKv2rK3lHRh4ReWpU=
+			gdsbv2qzIlrLdEWbgV4B+oWIKyE=
 			</data>
 			<key>hash2</key>
 			<data>
-			+0t6W2grVKwQSE+cYgnpaAx6k3xHNtjVS+3Ph1hwVdc=
+			H8/6sYVTkZvenmiJLheQvdV/myALStI7Uoj2hTwcfJo=
 			</data>
 		</dict>
 		<key>Headers/JiHuoNiaoAdSDK.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			sqACRWx1bAlSmlPcaJBl2fVjD7E=
+			C4T3oh+ObBngdHGhoFhTfe0WdHw=
 			</data>
 			<key>hash2</key>
 			<data>
-			FLumOsaHEdW0Ghg2GnkVgzxT9iES5zNCeLPSxpcjw8U=
+			l3XjQskSkFBgo9FMQOIm2Hv6FV0fSjwoC8ac4I/0+wI=
 			</data>
 		</dict>
 		<key>Headers/JiHuoNiaoSDKManager.h</key>

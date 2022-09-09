@@ -14,6 +14,10 @@ public class SwiftFlutterJihuoniaoPlugin: NSObject, FlutterPlugin {
             binaryMessenger: messenger!)
         let instance = SwiftFlutterJihuoniaoPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        // 注册信息流广告 PlatformView
+        registrar.register(
+            FlutterJihuoniaoFeedAdFactory(messenger: messenger!),
+            withId: FlutterJihuoniaoChannel.feedAdChannelPrefix)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

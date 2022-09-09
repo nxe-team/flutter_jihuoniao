@@ -1,0 +1,112 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:visibility_detector/visibility_detector.dart';
+
+class JihuoniaoFeedAd extends StatefulWidget {
+  static const String viewType = 'flutter_jihuoniao_feed_ad';
+
+  /// 广告位 ID
+  final String slotId;
+
+  /// 广告渲染成功
+  final void Function()? onAdRenderSuccess;
+
+  /// 广告加载失败
+  final void Function(String message)? onAdLoadFail;
+
+  /// 广告被曝光
+  final void Function()? onAdViewExposure;
+
+  /// 广告被点击
+  final void Function()? onAdDidClick;
+
+  /// 广告已广告
+  final void Function()? onAdDidClose;
+
+  const JihuoniaoFeedAd({
+    Key? key,
+    required this.slotId,
+    this.onAdRenderSuccess,
+    this.onAdLoadFail,
+    this.onAdViewExposure,
+    this.onAdDidClick,
+    this.onAdDidClose,
+  }) : super(key: key);
+
+  @override
+  _JihuoniaoFeedAdState createState() => _JihuoniaoFeedAdState();
+}
+
+class _JihuoniaoFeedAdState extends State<JihuoniaoFeedAd> {
+  final UniqueKey _detectorKey = UniqueKey();
+  MethodChannel? _methodChannel;
+
+  double _height = 0;
+
+  Future<void> methodCallHandler(MethodCall call) async {
+    switch (call.method) {
+      case 'onAdRenderSuccess':
+        setState(() {
+          _height = call.arguments['height'];
+        });
+        widget.onAdRenderSuccess?.call();
+        break;
+      case 'onAdLoadFail':
+        final String message = call.arguments['message'];
+        widget.onAdLoadFail?.call(message);
+        break;
+      case 'onAdViewExposure':
+        widget.onAdViewExposure?.call();
+        break;
+      case 'onAdDidClick':
+        widget.onAdDidClick?.call();
+        break;
+      case 'onAdDidClose':
+        widget.onAdDidClose?.call();
+        break;
+      default:
+        throw UnsupportedError("Unsupported method");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (Platform.isAndroid) return const SizedBox.shrink();
+
+    return AnimatedSize(
+      curve: Curves.easeInOut,
+      duration: const Duration(milliseconds: 300),
+      child: SizedBox(
+        height: _height,
+        child: VisibilityDetector(
+          key: _detectorKey,
+          child: UiKitView(
+            viewType: JihuoniaoFeedAd.viewType,
+            creationParams: {'slotId': widget.slotId},
+            creationParamsCodec: const StandardMessageCodec(),
+            onPlatformViewCreated: (int id) {
+              _methodChannel = MethodChannel('${JihuoniaoFeedAd.viewType}/$id');
+              _methodChannel!.setMethodCallHandler(methodCallHandler);
+            },
+          ),
+          onVisibilityChanged: (VisibilityInfo visibilityInfo) {
+            if (!mounted) return;
+            // 被遮盖了
+            final bool isCovered = visibilityInfo.visibleFraction != 1.0;
+            final Offset offset = (context.findRenderObject() as RenderBox)
+                .localToGlobal(Offset.zero);
+            _methodChannel?.invokeMethod('updateVisibleBounds', {
+              'isCovered': isCovered,
+              'x': offset.dx + visibilityInfo.visibleBounds.left,
+              'y': offset.dy + visibilityInfo.visibleBounds.top,
+              'width': visibilityInfo.visibleBounds.width,
+              'height': visibilityInfo.visibleBounds.height,
+            });
+          },
+        ),
+      ),
+    );
+  }
+}
