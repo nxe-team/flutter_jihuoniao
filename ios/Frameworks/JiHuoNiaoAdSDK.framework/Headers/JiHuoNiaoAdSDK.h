@@ -6,8 +6,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JHNInterstitialAd.h"
-
 //! Project version number for JiHuoNiaoAdSDK.
 FOUNDATION_EXPORT double JiHuoNiaoAdSDKVersionNumber;
 
