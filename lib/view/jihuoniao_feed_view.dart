@@ -13,6 +13,11 @@ class JihuoniaoFeedAd extends StatefulWidget {
   /// 广告渲染成功
   final void Function(double height)? onAdRenderSuccess;
 
+  /// 广告渲染成功
+  /// 快手广告加载后会自渲染，需在该回调使用其高度
+  /// 其他广告该回调高度为 0，需在 onAdRenderSuccess 回调中取高度
+  final void Function(double height)? onAdDidLoad;
+
   /// 广告加载失败
   final void Function(String message)? onAdLoadFail;
 
@@ -29,6 +34,7 @@ class JihuoniaoFeedAd extends StatefulWidget {
     Key? key,
     required this.slotId,
     this.onAdRenderSuccess,
+    this.onAdDidLoad,
     this.onAdLoadFail,
     this.onAdViewExposure,
     this.onAdDidClick,
@@ -48,6 +54,10 @@ class _JihuoniaoFeedAdState extends State<JihuoniaoFeedAd> {
       case 'onAdRenderSuccess':
         final double height = call.arguments['height'];
         widget.onAdRenderSuccess?.call(height);
+        break;
+      case 'onAdDidLoad':
+        final double height = call.arguments['height'];
+        widget.onAdDidLoad?.call(height);
         break;
       case 'onAdLoadFail':
         final String message = call.arguments['message'];
