@@ -18,6 +18,9 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        flatDir {
+            dirs project(':flutter_jihuoniao').file('libs')
+        }
     }
 }
 
@@ -47,4 +50,24 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // TODO: move to app module?
+    implementation 'com.android.support:appcompat-v7:+'
+    // 激活鸟 SDK
+    implementation(name: 'jhn_sdk_api_1.1.0.17', ext: 'aar')
+    implementation(name: 'jhn_sdk_common_1.1.0.14', ext: 'aar')
+    implementation(name: 'jhn_sdk_core_1.1.2.50', ext: 'aar')
+    implementation(name: 'oaid_sdk_1.0.25', ext: 'aar')
+    implementation(name: 'android-query-full.0.26.7', ext: 'jar')
+    implementation(name: 'jhn_1_4.470.1340', ext: 'aar')
+    implementation(name: 'jhn_2_4.7.0.8', ext: 'aar')
+    implementation(name: 'jhn_3_3.3.29', ext: 'aar')
+    implementation(name: 'jhn_4_4.5.0', ext: 'aar')
+    implementation(name: 'jhn_4_common_1.3.5', ext: 'aar')
+    implementation(name: 'jhn_5_3.3.6.6', ext: 'aar')
+    implementation(name: 'okdownload-1.0.5', ext: 'aar')
+    implementation(name: 'okhttp-3.10.0', ext: 'jar')
+    implementation(name: 'okio-1.14.0', ext: 'jar')
+    implementation(name: 'jhn_6_ad_3.4.20.9', ext: 'aar')
+    implementation(name: 'jhn_6_fusion_4.90.1.8', ext: 'aar')
+    implementation(name: 'FinalLink_1.1.7.4', ext: 'aar')
 }
