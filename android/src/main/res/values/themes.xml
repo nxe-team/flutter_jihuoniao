@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- 开屏广告界面 -->
+    <style name="SplashAdTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- 渗透状态栏 -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- 渗透底部导航栏 -->
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+</resources>

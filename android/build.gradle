@@ -19,6 +19,7 @@ rootProject.allprojects {
         google()
         mavenCentral()
         flatDir {
+            dirs 'libs'
             dirs project(':flutter_jihuoniao').file('libs')
         }
     }
@@ -44,14 +45,13 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    // TODO: move to app module?
-    implementation 'com.android.support:appcompat-v7:+'
+
     // 激活鸟 SDK
     implementation(name: 'jhn_sdk_api_1.1.0.17', ext: 'aar')
     implementation(name: 'jhn_sdk_common_1.1.0.14', ext: 'aar')
@@ -70,4 +70,8 @@ dependencies {
     implementation(name: 'jhn_6_ad_3.4.20.9', ext: 'aar')
     implementation(name: 'jhn_6_fusion_4.90.1.8', ext: 'aar')
     implementation(name: 'FinalLink_1.1.7.4', ext: 'aar')
+    implementation 'com.alibaba:fastjson:1.2.72'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }

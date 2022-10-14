@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.niuxiaoer.flutter_jihuoniao">
 
@@ -20,11 +21,16 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
 
     <application>
+        <activity
+            android:name=".view.SplashAdActivity"
+            android:exported="false"
+            android:theme="@style/SplashAdTheme" />
+
         <provider
             android:name="com.qq.e.comm.GDTFileProvider"
             android:authorities="${applicationId}.gdt.fileprovider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/gdt_file_path" />
@@ -53,4 +59,5 @@
                 android:resource="@xml/sigmob_provider_paths" />
         </provider>
     </application>
+
 </manifest>
