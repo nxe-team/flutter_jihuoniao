@@ -1,43 +1,57 @@
 package net.niuxiaoer.flutter_jihuoniao.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.ads.sdk.api.SplashAd
 import net.niuxiaoer.flutter_jihuoniao.R
 
-class SplashAdActivity : AppCompatActivity() {
+class SplashAdActivity : AppCompatActivity(), SplashAd.AdListener {
     private lateinit var container: FrameLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_ad)
+        // 设置该活动渐入渐出
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
 
         container = findViewById(R.id.splash_ad_container)
-        loadAd()
+        // 加载广告
+        SplashAd().loadAd(this, container, "81q547sonhiw", this)
     }
 
-    private fun loadAd() {
-        SplashAd().loadAd(this, container, "81q547sonhiw", object : SplashAd.AdListener {
-            override fun onADClose() {
-                Log.d("###", "onADClose")
-            }
+    /**
+     * 广告已关闭
+     */
+    override fun onADClose() {
+        TODO("Not yet implemented")
+    }
 
-            override fun onADClick() {
-                Log.d("###", "onADClick")
-            }
+    /**
+     * 广告被点击
+     */
+    override fun onADClick() {
+        TODO("Not yet implemented")
+    }
 
-            override fun onADExposure() {
-                Log.d("###", "onADExposure")
-            }
+    /**
+     * 广告曝光展示
+     */
+    override fun onADExposure() {
+        TODO("Not yet implemented")
+    }
 
-            override fun onADLoaded() {
-                Log.d("###", "onADLoaded")
-            }
+    /**
+     * 广告加载完成
+     */
+    override fun onADLoaded() {
+        TODO("Not yet implemented")
+    }
 
-            override fun onADError(p0: Int, p1: String?, p2: String?) {
-                Log.d("###", "onADError")
-            }
-        })
+    /**
+     * 广告加载失败
+     */
+    override fun onADError(p0: Int, p1: String?, p2: String?) {
+        TODO("Not yet implemented")
     }
 }

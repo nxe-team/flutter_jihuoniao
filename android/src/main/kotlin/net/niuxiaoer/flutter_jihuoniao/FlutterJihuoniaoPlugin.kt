@@ -3,7 +3,6 @@ package net.niuxiaoer.flutter_jihuoniao
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.ads.sdk.api.InterstitialAd
 import com.jihuoniao.sdk.JiHuoNiaoSDKManager
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -14,6 +13,8 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import net.niuxiaoer.flutter_jihuoniao.config.ChannelNames
+import net.niuxiaoer.flutter_jihuoniao.delegate.JihuoniaoInterstitialDelegate
 import net.niuxiaoer.flutter_jihuoniao.view.SplashAdActivity
 
 /** FlutterJihuoniaoPlugin */
@@ -21,56 +22,20 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private lateinit var context: Context
     private lateinit var activity: Activity
+    private lateinit var messenger: BinaryMessenger
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_jihuoniao")
+        messenger = flutterPluginBinding.binaryMessenger
+        channel = MethodChannel(messenger, ChannelNames.pluginChannelName)
         channel.setMethodCallHandler(this)
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
-            "initSDK" -> {
-                val jiHuoNiaoSDKManager: JiHuoNiaoSDKManager = JiHuoNiaoSDKManager.sharedAds()
-                jiHuoNiaoSDKManager.setDebug(true)
-                jiHuoNiaoSDKManager.startWithAppId(context, "836543846000", "02d1213c2f12372f")
-                result.success(true)
-            }
-            "showSplashAd" -> {
-                activity.startActivity(Intent(context, SplashAdActivity::class.java))
-                result.success(true)
-            }
-            "showInterstitialAd" -> {
-                InterstitialAd().loadAd(
-                    activity,
-                    "81q61bh65ujq",
-                    object : InterstitialAd.AdListener {
-                        override fun onADCached() {
-                            Log.d("###", "onADCached")
-                        }
-
-                        override fun onADOpen() {
-                            Log.d("###", "onADOpen")
-                        }
-
-                        override fun onADExposure() {
-                            Log.d("###", "onADExposure")
-                        }
-
-                        override fun onADClick() {
-                            Log.d("###", "onAdDidClick")
-                        }
-
-                        override fun onADClose() {
-                            Log.d("###", "onAdDidClose")
-                        }
-
-                        override fun onADError(p0: Int, p1: String?, p2: String?) {
-                            Log.d("###", "onADError")
-                        }
-                    })
-                result.success(true)
-            }
+            "initSDK" -> initSDK(result)
+            "showSplashAd" -> showSplashAd(result)
+            "showInterstitialAd" -> showInterstitialAd(result)
             else -> result.notImplemented()
         }
     }
@@ -88,4 +53,34 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
 
     override fun onDetachedFromActivity() {}
+
+    /**
+     * 初始化SDK
+     */
+    private fun initSDK(result: Result) {
+        val jiHuoNiaoSDKManager: JiHuoNiaoSDKManager = JiHuoNiaoSDKManager.sharedAds()
+        jiHuoNiaoSDKManager.setDebug(true)
+        jiHuoNiaoSDKManager.startWithAppId(context, "836543846000", "02d1213c2f12372f")
+        result.success(true)
+    }
+
+    /**
+     * 显示开屏广告
+     */
+    private fun showSplashAd(result: Result) {
+        activity.startActivity(Intent(context, SplashAdActivity::class.java))
+        result.success(true)
+    }
+
+    /**
+     * 显示插屏广告
+     */
+    private fun showInterstitialAd(result: Result) {
+        InterstitialAd().loadAd(
+            activity,
+            "81q61bh65ujq",
+            JihuoniaoInterstitialDelegate()
+        )
+        result.success(true)
+    }
 }
