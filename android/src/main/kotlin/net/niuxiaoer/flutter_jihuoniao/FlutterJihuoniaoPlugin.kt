@@ -17,6 +17,7 @@ import io.flutter.plugin.common.MethodChannel.Result
 import net.niuxiaoer.flutter_jihuoniao.config.ChannelNames
 import net.niuxiaoer.flutter_jihuoniao.delegate.JihuoniaoInterstitialDelegate
 import net.niuxiaoer.flutter_jihuoniao.util.GlobalData
+import net.niuxiaoer.flutter_jihuoniao.view.FeedAdViewFactory
 import net.niuxiaoer.flutter_jihuoniao.view.SplashAdActivity
 
 /** FlutterJihuoniaoPlugin */
@@ -25,8 +26,10 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var context: Context
     private lateinit var activity: Activity
     private lateinit var messenger: BinaryMessenger
+    private lateinit var flutterBinding: FlutterPlugin.FlutterPluginBinding
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        flutterBinding = flutterPluginBinding
         context = flutterPluginBinding.applicationContext
         messenger = flutterPluginBinding.binaryMessenger
         GlobalData.messenger = messenger
@@ -50,6 +53,12 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
+
+        // 注册 PlatformView
+        flutterBinding.platformViewRegistry.registerViewFactory(
+            ChannelNames.feedAdChannelPrefix,
+            FeedAdViewFactory(activity)
+        )
     }
 
     override fun onDetachedFromActivityForConfigChanges() {}

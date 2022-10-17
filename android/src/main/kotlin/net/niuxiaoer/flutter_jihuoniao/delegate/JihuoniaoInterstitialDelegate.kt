@@ -1,5 +1,6 @@
 package net.niuxiaoer.flutter_jihuoniao.delegate
 
+import android.util.Log
 import com.ads.sdk.api.InterstitialAd.AdListener
 import io.flutter.plugin.common.MethodChannel
 import net.niuxiaoer.flutter_jihuoniao.config.ChannelNames
@@ -26,8 +27,6 @@ class JihuoniaoInterstitialDelegate(
      */
     override fun onADClick() {
         postMessage("onAdDidClick", null)
-        // TODO: SDK Callback Bug
-        onADClose()
     }
 
     /**

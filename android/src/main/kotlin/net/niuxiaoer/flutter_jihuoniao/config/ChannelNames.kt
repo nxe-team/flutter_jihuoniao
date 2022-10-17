@@ -10,5 +10,8 @@ class ChannelNames {
 
         /// 插屏广告消息通道
         const val interstitialAdChannelName = "flutter_jihuoniao_interstitial_ad"
+
+        /// 信息流广告 PlatformView
+        const val feedAdChannelPrefix = "flutter_jihuoniao_feed_ad"
     }
 }
