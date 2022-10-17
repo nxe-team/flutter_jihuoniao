@@ -20,7 +20,9 @@ class JihuoniaoInterstitialDelegate(
     /**
      * 广告展示曝光
      */
-    override fun onADExposure() {}
+    override fun onADExposure() {
+        postMessage("onAdRenderSuccess", null)
+    }
 
     /**
      * 广告被点击

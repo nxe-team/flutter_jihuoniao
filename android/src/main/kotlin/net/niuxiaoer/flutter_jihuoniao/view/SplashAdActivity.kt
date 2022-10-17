@@ -37,6 +37,7 @@ class SplashAdActivity : AppCompatActivity(), SplashAd.AdListener {
      */
     override fun onADClose() {
         finish()
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         postMessage("onAdDidClose", null)
         GlobalData.splashAdResult.success(true)
     }
