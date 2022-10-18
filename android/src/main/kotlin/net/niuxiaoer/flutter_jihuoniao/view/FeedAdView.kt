@@ -3,6 +3,7 @@ package net.niuxiaoer.flutter_jihuoniao.view
 import android.app.Activity
 import android.content.Context
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -66,23 +67,28 @@ class FeedAdView(
     }
 
     /**
+     * 信息流广告渲染成功
+     */
+    override fun onRenderSuccess() {
+        container.measure(0, 0)
+        Log.d("###", "${container.measuredHeight / displayMetrics.density}")
+        // TODO: 快手广告测量后高度不对
+        val adViewHeight: Double = max(
+            100.0, (container.measuredHeight / displayMetrics.density).toDouble()
+        )
+        postMessage("onAdRenderSuccess", mapOf("height" to adViewHeight))
+    }
+
+    /**
      * 信息流广告加载成功
      */
     override fun onADLoaded(p0: MutableList<FeedData>?) {
         if (p0 == null) {
             return
         }
-
         val feedAd: FeedData = p0.first()
         feedAd.render()
         container.addView(feedAd.views)
-        container.measure(0, 0)
-
-        // TODO: 快手广告测量后高度不对
-        val adViewHeight: Double = max(
-            200.0, (container.measuredHeight / displayMetrics.density).toDouble()
-        )
-        postMessage("onAdRenderSuccess", mapOf("height" to adViewHeight))
     }
 
     /**
