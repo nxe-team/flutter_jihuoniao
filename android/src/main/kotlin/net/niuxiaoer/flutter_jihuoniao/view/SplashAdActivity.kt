@@ -13,6 +13,11 @@ class SplashAdActivity : AppCompatActivity(), SplashAd.AdListener {
     private lateinit var container: FrameLayout
     private lateinit var channel: MethodChannel
 
+    /**
+     * 已经提交结果给 Flutter 端，防止重复调用 result
+     */
+    private var isReturned: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_ad)
@@ -33,13 +38,16 @@ class SplashAdActivity : AppCompatActivity(), SplashAd.AdListener {
     }
 
     /**
-     * 广告已关闭
+     * 广告关闭，会被多次调用
      */
     override fun onADClose() {
         finish()
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
+        if (isReturned) return
         postMessage("onAdDidClose", null)
         GlobalData.splashAdResult.success(true)
+        isReturned = true
     }
 
     /**
@@ -63,7 +71,9 @@ class SplashAdActivity : AppCompatActivity(), SplashAd.AdListener {
      * 广告加载失败
      */
     override fun onADError(p0: Int, p1: String?, p2: String?) {
+        if (isReturned) return
         postMessage("onAdLoadFail", null)
         GlobalData.splashAdResult.success(false)
+        isReturned = true
     }
 }

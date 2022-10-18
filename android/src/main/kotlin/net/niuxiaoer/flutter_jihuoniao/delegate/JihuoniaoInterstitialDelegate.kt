@@ -13,6 +13,11 @@ class JihuoniaoInterstitialDelegate(
         ChannelNames.interstitialAdChannelName
     )
 ) : AdListener {
+    /**
+     * 已经提交结果给 Flutter 端，防止重复调用 result
+     */
+    private var isReturned: Boolean = false
+
     private fun postMessage(method: String, arguments: Map<String, Any>?) {
         channel.invokeMethod(method, arguments)
     }
@@ -35,16 +40,20 @@ class JihuoniaoInterstitialDelegate(
      * 广告已关闭
      */
     override fun onADClose() {
+        if (isReturned) return
         postMessage("onAdDidClose", null)
         result.success(true)
+        isReturned = true
     }
 
     /**
      * 广告加载失败
      */
     override fun onADError(p0: Int, p1: String?, p2: String?) {
+        if (isReturned) return
         postMessage("onAdLoadFail", null)
         result.success(false)
+        isReturned = true
     }
 
     /**
