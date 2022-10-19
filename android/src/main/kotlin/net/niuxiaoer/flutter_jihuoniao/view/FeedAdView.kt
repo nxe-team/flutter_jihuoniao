@@ -7,7 +7,7 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.widget.LinearLayout
 import com.ads.sdk.api.FeedAd.AdListener
 import com.ads.sdk.api.FeedData
 import com.ads.sdk.api.JHNFeedAd
@@ -17,7 +17,6 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import net.niuxiaoer.flutter_jihuoniao.config.ChannelNames
 import net.niuxiaoer.flutter_jihuoniao.util.GlobalData
-import kotlin.math.max
 
 class FeedAdViewFactory(private var activity: Activity) :
     PlatformViewFactory(StandardMessageCodec.INSTANCE) {
@@ -28,10 +27,10 @@ class FeedAdViewFactory(private var activity: Activity) :
 }
 
 class FeedAdView(
-    private val context: Context, activity: Activity, viewId: Int, args: Map<String, Any>
+    context: Context, activity: Activity, viewId: Int, args: Map<String, Any>
 ) : PlatformView, AdListener {
     private var channel: MethodChannel
-    private var container: FrameLayout = FrameLayout(context)
+    private var container: LinearLayout = LinearLayout(context)
     private val displayMetrics: DisplayMetrics
 
     override fun getView(): View {
@@ -42,12 +41,13 @@ class FeedAdView(
 
     init {
         // 广告容器
-        container.layoutParams = FrameLayout.LayoutParams(
+        container.layoutParams = LinearLayout.LayoutParams(
             // 宽度和父容器相同
             ViewGroup.LayoutParams.WRAP_CONTENT,
             // 高度能包裹广告视图
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+        container.clipChildren = false
         container.setBackgroundColor(Color.WHITE)
         displayMetrics = context.applicationContext.resources.displayMetrics
 
@@ -73,15 +73,10 @@ class FeedAdView(
      * 信息流广告渲染成功
      */
     override fun onRenderSuccess(p0: FeedData?) {
-//        if (p0 == null) return
-//
-//        p0.views.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-//        Log.d("###", "onRenderSuccess ${p0.views.height} ${p0.views.measuredHeight}")
-//
-//        val adViewHeight: Double = (p0.views.measuredHeight / displayMetrics.density).toDouble()
-//
-//        // 传递高度给Flutter
-//        postMessage("onAdRenderSuccess", mapOf("height" to adViewHeight))
+        if (p0 == null) return
+
+        val adViewHeight: Double = (p0.views.height / displayMetrics.density).toDouble()
+        postMessage("onAdRenderSuccess", mapOf("height" to adViewHeight))
     }
 
     /**
@@ -93,13 +88,6 @@ class FeedAdView(
         val feedAd: FeedData = p0.first()
         feedAd.render()
         container.addView(feedAd.views)
-
-        feedAd.views.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        val adViewHeight: Double =
-            max(130.0, (feedAd.views.measuredHeight / displayMetrics.density).toDouble())
-        postMessage("onAdRenderSuccess", mapOf("height" to adViewHeight))
-        // TODO: 快手广告测量后高度不对
-        // container.viewTreeObserver.addOnGlobalLayoutListener()
     }
 
     /**
