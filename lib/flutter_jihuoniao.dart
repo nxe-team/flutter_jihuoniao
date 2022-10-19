@@ -10,12 +10,21 @@ class FlutterJihuoniao {
       MethodChannel(AdChannel.pluginChannelName);
 
   /// 初始化 SDK
-  static Future<void> initSDK(
-      {required String appId, required String appKey}) async {
+  static Future<void> initSDK({
+    required String appId,
+    required String appKey,
+    bool isDebug = true,
+  }) async {
     await _channel.invokeMethod('initSDK', {
       'appId': appId,
       'appKey': appKey,
+      'isDebug': isDebug,
     });
+  }
+
+  /// 请求必要的权限
+  static Future<void> requestNecessaryPermissions() async {
+    await _channel.invokeMethod('requestNecessaryPermissions');
   }
 
   /// 显示开屏广告

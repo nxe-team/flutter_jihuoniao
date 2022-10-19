@@ -17,6 +17,7 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import net.niuxiaoer.flutter_jihuoniao.config.ChannelNames
 import net.niuxiaoer.flutter_jihuoniao.util.GlobalData
+import kotlin.math.max
 
 class FeedAdViewFactory(private var activity: Activity) :
     PlatformViewFactory(StandardMessageCodec.INSTANCE) {
@@ -72,15 +73,15 @@ class FeedAdView(
      * 信息流广告渲染成功
      */
     override fun onRenderSuccess(p0: FeedData?) {
-        if (p0 == null) return
-
-        p0.views.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        Log.d("###", "onRenderSuccess ${p0.views.height} ${p0.views.measuredHeight}")
-
-        val adViewHeight: Double = (p0.views.height / displayMetrics.density).toDouble()
-
-        // 传递高度给Flutter
-        postMessage("onAdRenderSuccess", mapOf("height" to adViewHeight))
+//        if (p0 == null) return
+//
+//        p0.views.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+//        Log.d("###", "onRenderSuccess ${p0.views.height} ${p0.views.measuredHeight}")
+//
+//        val adViewHeight: Double = (p0.views.measuredHeight / displayMetrics.density).toDouble()
+//
+//        // 传递高度给Flutter
+//        postMessage("onAdRenderSuccess", mapOf("height" to adViewHeight))
     }
 
     /**
@@ -89,10 +90,14 @@ class FeedAdView(
     override fun onADLoaded(p0: MutableList<FeedData>?) {
         if (p0 == null) return
 
-        Log.d("###", "${p0.size}")
         val feedAd: FeedData = p0.first()
         feedAd.render()
         container.addView(feedAd.views)
+
+        feedAd.views.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        val adViewHeight: Double =
+            max(130.0, (feedAd.views.measuredHeight / displayMetrics.density).toDouble())
+        postMessage("onAdRenderSuccess", mapOf("height" to adViewHeight))
         // TODO: 快手广告测量后高度不对
         // container.viewTreeObserver.addOnGlobalLayoutListener()
     }

@@ -43,6 +43,7 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val args: Map<String, Any> = call.arguments<Map<String, Any>>() ?: emptyMap()
         when (call.method) {
             "initSDK" -> initSDK(args, result)
+            "requestNecessaryPermissions" -> requestNecessaryPermissions(result)
             "showSplashAd" -> showSplashAd(args, result)
             "showInterstitialAd" -> showInterstitialAd(args, result)
             else -> result.notImplemented()
@@ -58,8 +59,7 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
         // 注册 PlatformView
         flutterBinding.platformViewRegistry.registerViewFactory(
-            ChannelNames.feedAdChannelPrefix,
-            FeedAdViewFactory(activity)
+            ChannelNames.feedAdChannelPrefix, FeedAdViewFactory(activity)
         )
     }
 
@@ -76,8 +76,7 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val appId: String = args["appId"] as String
         val appKey: String = args["appKey"] as String
         val jiHuoNiaoSDKManager: JiHuoNiaoSDKManager = JiHuoNiaoSDKManager.sharedAds()
-        jiHuoNiaoSDKManager.setDebug(true)
-        requestNecessaryPermissions()
+        jiHuoNiaoSDKManager.isDebug = args["isDebug"] as Boolean
         jiHuoNiaoSDKManager.startWithAppId(context, appId, appKey)
         result.success(true)
     }
@@ -85,31 +84,31 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /**
      * 请求必要的权限
      */
-    private fun requestNecessaryPermissions() {
+    private fun requestNecessaryPermissions(result: Result) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
-//        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            loadPermission.add(Manifest.permission.READ_PHONE_STATE)
+        var necessaryPermissions: Array<String> = emptyArray<String>()
+
+        if (activity.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            necessaryPermissions += Manifest.permission.READ_PHONE_STATE
+        }
+
+        if (activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            necessaryPermissions += Manifest.permission.WRITE_EXTERNAL_STORAGE
+        }
+
+        // 位置权限
+//        if (activity.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            necessaryPermissions += Manifest.permission.ACCESS_FINE_LOCATION
 //        }
-//
-//
-//        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            loadPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//        }
-//
-//        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            loadPermission.add(Manifest.permission.ACCESS_FINE_LOCATION)
-//        }
-//
-//        if (loadPermission.isEmpty()) {
-//            return true
-//        }
-        activity.requestPermissions(
-            arrayOf(
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ), 1
-        )
+
+        // 没有需要请求的权限
+        if (necessaryPermissions.isEmpty()) {
+            result.success(true);
+            return
+        }
+
+        activity.requestPermissions(necessaryPermissions, 1)
+        result.success(true);
     }
 
     /**
@@ -127,9 +126,7 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
      */
     private fun showInterstitialAd(args: Map<String, Any>, result: Result) {
         InterstitialAd().loadAd(
-            activity,
-            args["slotId"] as String,
-            JihuoniaoInterstitialDelegate(result)
+            activity, args["slotId"] as String, JihuoniaoInterstitialDelegate(result)
         )
     }
 }
