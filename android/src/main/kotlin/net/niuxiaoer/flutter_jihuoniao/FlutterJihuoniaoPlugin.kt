@@ -1,9 +1,11 @@
 package net.niuxiaoer.flutter_jihuoniao
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.content.pm.PackageManager
+import android.os.Build
 import com.ads.sdk.api.InterstitialAd
 import com.jihuoniao.sdk.JiHuoNiaoSDKManager
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -75,8 +77,39 @@ class FlutterJihuoniaoPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val appKey: String = args["appKey"] as String
         val jiHuoNiaoSDKManager: JiHuoNiaoSDKManager = JiHuoNiaoSDKManager.sharedAds()
         jiHuoNiaoSDKManager.setDebug(true)
+        requestNecessaryPermissions()
         jiHuoNiaoSDKManager.startWithAppId(context, appId, appKey)
         result.success(true)
+    }
+
+    /**
+     * 请求必要的权限
+     */
+    private fun requestNecessaryPermissions() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return
+//        if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            loadPermission.add(Manifest.permission.READ_PHONE_STATE)
+//        }
+//
+//
+//        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            loadPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//        }
+//
+//        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            loadPermission.add(Manifest.permission.ACCESS_FINE_LOCATION)
+//        }
+//
+//        if (loadPermission.isEmpty()) {
+//            return true
+//        }
+        activity.requestPermissions(
+            arrayOf(
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ), 1
+        )
     }
 
     /**

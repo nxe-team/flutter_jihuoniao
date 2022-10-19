@@ -50,6 +50,7 @@ class JihuoniaoInterstitialDelegate(
      * 广告加载失败
      */
     override fun onADError(p0: Int, p1: String?, p2: String?) {
+        Log.d("###", "InterstitialAd onADError $p2")
         if (isReturned) return
         postMessage("onAdLoadFail", null)
         result.success(false)

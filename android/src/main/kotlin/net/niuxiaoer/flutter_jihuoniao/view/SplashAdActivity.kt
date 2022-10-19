@@ -1,6 +1,7 @@
 package net.niuxiaoer.flutter_jihuoniao.view
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.ads.sdk.api.SplashAd
@@ -38,11 +39,19 @@ class SplashAdActivity : AppCompatActivity(), SplashAd.AdListener {
     }
 
     /**
+     * 结束该开屏活动
+     */
+    private fun finishActivity() {
+        finish()
+        // 渐出关闭
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    /**
      * 广告关闭，会被多次调用
      */
     override fun onADClose() {
-        finish()
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        finishActivity()
 
         if (isReturned) return
         postMessage("onAdDidClose", null)
@@ -71,6 +80,9 @@ class SplashAdActivity : AppCompatActivity(), SplashAd.AdListener {
      * 广告加载失败
      */
     override fun onADError(p0: Int, p1: String?, p2: String?) {
+        Log.d("###", "SplashAd onADError $p2")
+        finishActivity()
+
         if (isReturned) return
         postMessage("onAdLoadFail", null)
         GlobalData.splashAdResult.success(false)
