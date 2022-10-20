@@ -50,6 +50,7 @@ class _FeedAdState extends State<FeedAd> with AutomaticKeepAliveClientMixin {
             onAdDidClose: () {
               setState(() {
                 _isRemoved = true;
+                _isVisible = false;
               });
             },
           ),

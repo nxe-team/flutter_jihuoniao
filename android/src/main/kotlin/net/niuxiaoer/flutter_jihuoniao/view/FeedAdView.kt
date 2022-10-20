@@ -32,12 +32,16 @@ class FeedAdView(
     private var channel: MethodChannel
     private var container: LinearLayout = LinearLayout(context)
     private val displayMetrics: DisplayMetrics
+    private var feedAd: FeedData? = null
 
     override fun getView(): View {
         return container
     }
 
-    override fun dispose() {}
+    override fun dispose() {
+        feedAd?.onDestroy()
+        container.removeAllViews()
+    }
 
     init {
         // 广告容器
@@ -86,6 +90,7 @@ class FeedAdView(
         if (p0 == null) return
 
         val feedAd: FeedData = p0.first()
+        this.feedAd = feedAd
         feedAd.render()
         container.addView(feedAd.views)
     }
@@ -117,7 +122,7 @@ class FeedAdView(
      */
     override fun onADClose(p0: FeedData?) {
         postMessage("onAdDidClose", null)
-        // TODO: 销毁广告
+        p0?.onDestroy()
         container.removeAllViews()
     }
 }
