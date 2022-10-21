@@ -13,21 +13,25 @@
 -keep public class com.ads.sdk.channel.methodproxy**{
       public <methods>;
 }
--dontwarn com.bun.**
--keep class com.bun.** {*;}
--keep class a.**{*;}
--keep class XI.CA.XI.**{*;}
--keep class XI.K0.XI.**{*;}
--keep class XI.XI.K0.**{*;}
--keep class XI.vs.K0.**{*;}
--keep class XI.xo.XI.XI.**{*;}
--keep class com.asus.msa.SupplementaryDID.**{*;}
--keep class com.asus.msa.sdid.**{*;}
--keep class com.huawei.hms.ads.identifier.**{*;}
--keep class com.samsung.android.deviceidservice.**{*;}
--keep class com.zui.opendeviceidlibrary.**{*;}
--keep class org.json.**{*;}
--keep public class com.netease.nis.sdkwrapper.Utils {public <methods>;}
+-keep class jhn.repeackage.com.uodis.opendevice.aidl.** { *; }
+-keep interface jhn.repeackage.com.uodis.opendevice.aidl.** { *; }
+-keep class jhn.repeackage.com.asus.msa.SupplementaryDID.** { *; }
+-keep interface jhn.repeackage.com.asus.msa.SupplementaryDID.** { *; }
+-keep class jhn.repeackage.com.bun.lib.** { *; }
+-keep interface jhn.repeackage.com.bun.lib.** { *; }
+-keep class jhn.repeackage.com.heytap.openid.** { *; }
+-keep interface jhn.repeackage.com.heytap.openid.** { *; }
+-keep class jhn.repeackage.com.samsung.android.deviceidservice.** { *; }
+-keep interface jhn.repeackage.com.samsung.android.deviceidservice.** { *; }
+-keep class jhn.repeackage.com.zui.deviceidservice.** { *; }
+-keep interface jhn.repeackage.com.zui.deviceidservice.** { *; }
+-keep class jhn.repeackage.com.coolpad.deviceidsupport.** { *; }
+-keep interface jhn.repeackage.com.coolpad.deviceidsupport.** { *; }
+-keep class jhn.repeackage.com.android.creator.** { *; }
+-keep interface jhn.repeackage.com.android.creator.** { *; }
+-keep class jhn.repeackage.com.google.android.gms.ads.identifier.internal.** { *; }
+-keep interface jhn.repeackage.com.google.android.gms.ads.identifier.internal.* { *; }
+
 -keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable*Annotation*,EnclosingMethod
 -keep class com.bytedance.sdk.openadsdk.** {*;}
 -keep public interface com.bytedance.sdk.openadsdk.downloadnew.** {*;}
