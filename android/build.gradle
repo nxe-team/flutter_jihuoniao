@@ -63,7 +63,7 @@ dependencies {
     // 激活鸟 SDK
     implementation(name: 'jhn_sdk_api_1.1.0.19', ext: 'aar')
     implementation(name: 'jhn_sdk_common_1.1.0.17', ext: 'aar')
-    implementation(name: 'jhn_sdk_core_1.1.3.58', ext: 'aar')
+    implementation(name: 'jhn_sdk_core_1.1.3.60', ext: 'aar')
     implementation(name: 'android-query-full.0.26.7', ext: 'jar')
     implementation(name: 'FinalLink_1.1.7.4', ext: 'aar')
     implementation(name: 'jhn_1_4.491.1361', ext: 'aar')
