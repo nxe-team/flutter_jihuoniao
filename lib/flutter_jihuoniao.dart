@@ -24,6 +24,7 @@ class FlutterJihuoniao {
 
   /// 请求必要的权限
   static Future<void> requestNecessaryPermissions() async {
+    if (Platform.isIOS) return;
     await _channel.invokeMethod('requestNecessaryPermissions');
   }
 
