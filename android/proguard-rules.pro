@@ -1,18 +1,6 @@
 -keep public class com.ads.sdk.api.**{ *;}
--keep class com.ads.sdk.config.AdConfig{ *;}
 -keep public class com.jihuoniao.sdk.**{ *;}
 -keep public class com.ads.device.**{ *;}
--keep class com.ads.sdk.config.AdConfig$*{
-        <fields>;
-        <methods>;
-}
--keep public class com.ads.sdk.net.model.**{ *;}
--keep public class com.ads.sdk.channel.**.Budget{
-      public <methods>;
-}
--keep public class com.ads.sdk.channel.methodproxy**{
-      public <methods>;
-}
 -keep class jhn.repeackage.com.uodis.opendevice.aidl.** { *; }
 -keep interface jhn.repeackage.com.uodis.opendevice.aidl.** { *; }
 -keep class jhn.repeackage.com.asus.msa.SupplementaryDID.** { *; }
@@ -31,6 +19,34 @@
 -keep interface jhn.repeackage.com.android.creator.** { *; }
 -keep class jhn.repeackage.com.google.android.gms.ads.identifier.internal.** { *; }
 -keep interface jhn.repeackage.com.google.android.gms.ads.identifier.internal.* { *; }
+-keep class com.ads.sdk.config.AdConfig{ *; }
+-keep class com.ads.sdk.config.AdConfig$*{
+        <fields>;
+        <methods>;
+}
+-keep public class com.ads.sdk.net.model.**{ *;}
+-keep public class com.ads.sdk.channel.**.Budget{
+      public <methods>;
+}
+-keep public class com.ads.sdk.channel.methodproxy**{
+      public <methods>;
+}
+
+-dontwarn com.bun.**
+-keep class com.bun.** {*;}
+-keep class a.**{*;}
+-keep class XI.CA.XI.**{*;}
+-keep class XI.K0.XI.**{*;}
+-keep class XI.XI.K0.**{*;}
+-keep class XI.vs.K0.**{*;}
+-keep class XI.xo.XI.XI.**{*;}
+-keep class com.asus.msa.SupplementaryDID.**{*;}
+-keep class com.asus.msa.sdid.**{*;}
+-keep class com.huawei.hms.ads.identifier.**{*;}
+-keep class com.samsung.android.deviceidservice.**{*;}
+-keep class com.zui.opendeviceidlibrary.**{*;}
+-keep class org.json.**{*;}
+-keep public class com.netease.nis.sdkwrapper.Utils {public <methods>;}
 
 -keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable*Annotation*,EnclosingMethod
 -keep class com.bytedance.sdk.openadsdk.** {*;}
@@ -46,7 +62,6 @@
 -dontwarn aegon.chrome.**
 -keep class pro.dxys.ad.**{*;}
 -keep class com.taobao.**{*; }
-
 -dontoptimize
 -keep class com.google.android.material.** {*;}
 -keep class androidx.** {*;}
@@ -86,6 +101,7 @@
 }
 -keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
 -dontwarn  org.apache.**
+
 -dontwarn com.baidu.mobads.sdk.api.**
 -keepclassmembers class * extends android.app.Activity {
    public void *(android.view.View);
