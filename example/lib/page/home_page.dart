@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_jihuoniao/flutter_jihuoniao.dart';
 import 'package:flutter_jihuoniao_example/config/ad_config.dart';
@@ -14,6 +16,13 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            ElevatedButton(
+              onPressed: () {
+                if (Platform.isIOS) return;
+                FlutterJihuoniao.requestNecessaryPermissions();
+              },
+              child: const Text('请求必要的权限 Android'),
+            ),
             ElevatedButton(
               onPressed: () {
                 FlutterJihuoniao.showSplashAd(slotId: AdConfig.splashId);

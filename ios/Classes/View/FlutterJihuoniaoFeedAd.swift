@@ -55,7 +55,13 @@ class FlutterJihuoniaoFeedAd: NSObject, FlutterPlatformView, JHNFeedAdDelegate {
     
     /// 信息流广告加载成功
     func jhnFeedAdDidLoad(_ feedDataArray: [Any]) {
-        container.addSubview(feedDataArray.first as! UIView)
+        let adView: UIView = feedDataArray.first as! UIView
+        container.addSubview(adView)
+        // 快手广告加载后会自渲染不会调用 jhnFeedAdViewRenderSuccess
+        // 其他广告触发 jhnFeedAdDidLoad 时高度为 0，渲染后触发 jhnFeedAdViewRenderSuccess
+        postMessage("onAdDidLoad", arguments: [
+            "height": adView.bounds.height
+        ])
     }
     
     /// 信息流广告加载失败

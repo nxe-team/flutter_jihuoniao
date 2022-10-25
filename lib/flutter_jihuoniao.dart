@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,12 +10,22 @@ class FlutterJihuoniao {
       MethodChannel(AdChannel.pluginChannelName);
 
   /// 初始化 SDK
-  static Future<void> initSDK(
-      {required String appId, required String appKey}) async {
+  static Future<void> initSDK({
+    required String appId,
+    required String appKey,
+    bool isDebug = true,
+  }) async {
     await _channel.invokeMethod('initSDK', {
       'appId': appId,
       'appKey': appKey,
+      'isDebug': isDebug,
     });
+  }
+
+  /// 请求必要的权限
+  static Future<void> requestNecessaryPermissions() async {
+    if (Platform.isIOS) return;
+    await _channel.invokeMethod('requestNecessaryPermissions');
   }
 
   /// 显示开屏广告
@@ -66,7 +77,7 @@ class FlutterJihuoniao {
           break;
         case 'onAdLoadFail':
           // 关闭空白弹窗
-          Navigator.pop(context);
+          if (Platform.isIOS) Navigator.pop(context);
           onAdLoadFail?.call();
           break;
         case 'onAdDidClick':
@@ -74,7 +85,7 @@ class FlutterJihuoniao {
           break;
         case 'onAdDidClose':
           // 关闭空白弹窗
-          Navigator.pop(context);
+          if (Platform.isIOS) Navigator.pop(context);
           onAdDidClose?.call();
           break;
       }
@@ -84,15 +95,17 @@ class FlutterJihuoniao {
     // QUE: 展示的广告并不在顶层？
     // 考虑放在iOS里添加空白视图，Delegate 回调中
     //   没有广告的 UIVIew 供调用 bringSubviewToFront
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      barrierColor: Colors.transparent,
-      builder: (BuildContext context) => WillPopScope(
-        onWillPop: () async => false,
-        child: const Material(color: Colors.transparent),
-      ),
-    );
+    if (Platform.isIOS) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.transparent,
+        builder: (BuildContext context) => WillPopScope(
+          onWillPop: () async => false,
+          child: const Material(color: Colors.transparent),
+        ),
+      );
+    }
 
     await _channel.invokeMethod('showInterstitialAd', {
       'slotId': slotId,
