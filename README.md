@@ -10,7 +10,29 @@ Flutter 激活鸟广告插件
 
 #### Android
 
-暂不提供
+1. 引入该 Flutter 插件
+
+2. Gradle 依赖冲突
+   应用自身依赖有版本冲突可参考：[Duplicated classes found ](https://stackoverflow.com/questions/56695106/duplicated-classes-found-in-modules-classes-jar)
+
+   ```groovy
+   dependencies {
+       implementation('com.XXX.XXX:XXX:3.4.0') {
+           exclude group: 'com.XXX.XXX', module: 'XXX'
+       }
+   }
+   ```
+
+   应用使用的插件中引入的依赖有版本冲突可参考：
+
+   ```groovy
+   android {
+     configurations {
+       // 去掉激活鸟重复依赖
+       all*.exclude module: 'okhttp-3.10.0'
+     }
+   }
+   ```
 
 #### iOS
 
@@ -142,6 +164,7 @@ libc++abi.tbd
 await FlutterJihuoniao.initSDK(
   appId: AdConfig.appId,
   appKey: AdConfig.appKey,
+  isDebug: true,
 );
 ```
 
@@ -210,6 +233,7 @@ class _FeedAdState extends State<FeedAd> with AutomaticKeepAliveClientMixin {
       },
       onAdViewExposure: () {
         // 曝光成功
+        // Android 暂不
       },
       onAdDidClick: () {
         // 点击了广告
