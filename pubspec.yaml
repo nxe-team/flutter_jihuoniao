@@ -1,7 +1,10 @@
 name: flutter_jihuoniao
-description: A new flutter plugin project.
+description: 激活鸟广告插件
 version: 1.0.0
 homepage: https://github.com/nxe-team/flutter_jihuoniao
+repository: https://github.com/nxe-team/flutter_jihuoniao
+issue_tracker: https://github.com/nxe-team/flutter_jihuoniao/issues
+documentation: https://github.com/nxe-team/flutter_jihuoniao/blob/main/README.md
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
