@@ -114,3 +114,7 @@
 -keep class com.style.widget.** {*;}
 -keep class com.component.** {*;}
 -keep class com.baidu.ad.magic.flute.** {*;}
+-keep class com.ads.widget.* {*;}
+-keep class com.kwad.sdk.** { *;}
+-keep class com.ksad.download.** { *;}
+-keep class com.kwai.filedownloader.** { *;}
